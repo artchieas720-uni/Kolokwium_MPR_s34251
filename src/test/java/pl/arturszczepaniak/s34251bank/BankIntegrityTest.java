@@ -31,7 +31,7 @@ public class BankIntegrityTest {
 
         assertEquals(Status.ACCEPTED, loaded.getStatus());
         assertEquals(350.0, loaded.getBalance());
-        assertEquals(loaded.getId(), loaded.getId());
+        assertEquals(1, loaded.getId());
     }
 
 
