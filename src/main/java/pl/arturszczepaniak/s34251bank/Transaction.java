@@ -11,6 +11,11 @@ public class Transaction {
         this.clientId = clientId;
     }
 
+    public Transaction(Status status, float value) {
+        this.status = status;
+        this.value = value;
+    }
+
     public Status getStatus() {
         return status;
     }

@@ -23,16 +23,16 @@ public class BankService {
         Client client = storage.getClientById(clientId).get();
 
         if(client == null){
-            return new Transaction(Status.DECLINED, amount, clientId);
+            return new Transaction(Status.DECLINED, amount);
         }
 
         float val = client.getBalance() - amount;
         if (client.getBalance() < amount) {
-            return new Transaction(Status.DECLINED, amount, clientId);
+            return new Transaction(Status.DECLINED, amount);
         }
 
         client.setBalance(client.getBalance() - amount);
-        return new Transaction(Status.ACCEPTED,val, clientId);
+        return new Transaction(Status.ACCEPTED,val);
     }
 
     public Transaction deposit(int clientId, float amount) {
@@ -40,12 +40,12 @@ public class BankService {
         Client client = storage.getClientById(clientId).get();
 
         if(client == null){
-            return new Transaction(Status.DECLINED, amount, clientId);
+            return new Transaction(Status.DECLINED, amount);
         }
 
         client.setBalance(client.getBalance() + amount);
         float val = client.getBalance() + amount;
-        return new Transaction(Status.ACCEPTED, val, clientId);
+        return new Transaction(Status.ACCEPTED, val);
     }
 
     public Client getClient(int clientId) {
