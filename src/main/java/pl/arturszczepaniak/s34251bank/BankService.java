@@ -19,42 +19,32 @@ public class BankService {
         return storage.save(client);
     }
 
-
-//    public Transaction transaction(int clientId, float val){
-//
-//        Client client = storage.getClientById(clientId).
-//                orElseThrow(() -> new RuntimeException("Client not found"));
-//        float transVal = client.getValueOfMoney() - val;
-//
-//        return new Transaction(StatusOfTransaction.ACCEPTED,transVal,clientId);
-//    }
-//
-//    public void putMoney(int clientId, float val){
-//        Client client = storage.getClientById(clientId).
-//                orElseThrow(() -> new RuntimeException("Client not found"));
-//        float transVal = client.getValueOfMoney() - val;
-//        return StatusOfTransaction,transVal
-//    }
-
     public Transaction transaction(int clientId, float amount) {
-        Client client = storage.getClientById(clientId)
-                .orElseThrow(() -> new RuntimeException("Nie znaleziono klienta"));
+        Client client = storage.getClientById(clientId).get();
 
-        if (client.getValueOfMoney() < amount) {
-            throw new RuntimeException("Niewystarczające środki");
+        if(client == null){
+            return new Transaction(Status.DECLINED, amount, clientId);
         }
 
-        client.setValueOfMoney(client.getValueOfMoney() - amount);
-        float val = client.getValueOfMoney() - amount;
+        float val = client.getBalance() - amount;
+        if (client.getBalance() < amount) {
+            return new Transaction(Status.DECLINED, amount, clientId);
+        }
+
+        client.setBalance(client.getBalance() - amount);
         return new Transaction(Status.ACCEPTED,val, clientId);
     }
 
     public Transaction deposit(int clientId, float amount) {
-        Client client = storage.getClientById(clientId)
-                .orElseThrow(() -> new RuntimeException("Nie znaleziono klienta"));
 
-        client.setValueOfMoney(client.getValueOfMoney() + amount);
-        float val = client.getValueOfMoney() + amount;
+        Client client = storage.getClientById(clientId).get();
+
+        if(client == null){
+            return new Transaction(Status.DECLINED, amount, clientId);
+        }
+
+        client.setBalance(client.getBalance() + amount);
+        float val = client.getBalance() + amount;
         return new Transaction(Status.ACCEPTED, val, clientId);
     }
 

@@ -30,7 +30,7 @@ public class BankServiceMockTest {
         service.deposit(clientId, 50.0F);
 
         // THEN
-        assertEquals(150.0, client.getValueOfMoney());
+        assertEquals(150.0, client.getBalance());
     }
 
     @Test
@@ -52,13 +52,9 @@ public class BankServiceMockTest {
                 .thenReturn(Optional.of(client));
 
         // WHEN
-        RuntimeException ex = assertThrows(
-                RuntimeException.class,
-                () -> service.transaction(client.getId(), 200.0F)
-        );
-
+        Transaction trans = service.transaction(client.getId(), 200.0F);
         //THEN
-        assertEquals("Niewystarczające środki", ex.getMessage());
+        assertEquals(Status.DECLINED, trans.getStatus());
 
     }
 

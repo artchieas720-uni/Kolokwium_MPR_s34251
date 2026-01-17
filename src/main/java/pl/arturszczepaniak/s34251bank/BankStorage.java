@@ -8,7 +8,7 @@ import java.util.Optional;
 @Component
 public class BankStorage {
 
-    public ArrayList<Client> clients = new ArrayList<Client>();
+    private ArrayList<Client> clients = new ArrayList<Client>();
 
 
     private int IdOfTicket = 1;
@@ -24,7 +24,7 @@ public class BankStorage {
     }
 
     public Optional<Client> getClientById(int id) {
-        return clients.stream()
+        return getALLClients().stream()
                 .filter(ticket -> ticket.getId() == id)
                 .findFirst();
     }

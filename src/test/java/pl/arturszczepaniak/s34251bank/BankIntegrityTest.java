@@ -30,13 +30,13 @@ public class BankIntegrityTest {
         Client loaded = service.getClient(client.getId());
 
         assertEquals(Status.ACCEPTED, loaded.getStatus());
-        assertEquals(350.0, loaded.getValueOfMoney());
+        assertEquals(350.0, loaded.getBalance());
         assertEquals(loaded.getId(), loaded.getId());
     }
 
 
     @Test
-    void shouldFailWhenInsufficientFunds() {
+    void shouldFailWhenNoFunds() {
 
         // GIVEN
         Client client = service.registerClient(
@@ -46,13 +46,11 @@ public class BankIntegrityTest {
         service.deposit(client.getId(), 100.0F);
 
         // WHEN
-        RuntimeException ex = assertThrows(
-                RuntimeException.class,
-                () -> service.transaction(client.getId(), 200.0F)
-        );
+
+        Transaction trans = service.transaction(client.getId(), 200.0F);
 
         // THEN
-        assertEquals("Niewystarczające środki", ex.getMessage());
+        assertEquals(Status.DECLINED, trans.getStatus());
     }
 
 

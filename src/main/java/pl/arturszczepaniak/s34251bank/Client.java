@@ -3,16 +3,16 @@ package pl.arturszczepaniak.s34251bank;
 public class Client {
     private int id;
     private Status status;
-    private float valueOfMoney;
+    private float balance;
 
     public Client(float valueOfMoney, Status status, int id) {
-        this.valueOfMoney = valueOfMoney;
+        this.balance = valueOfMoney;
         this.status = status;
         this.id = id;
     }
 
     public Client(float valueOfMoney, Status status) {
-        this.valueOfMoney = valueOfMoney;
+        this.balance = valueOfMoney;
         this.status = status;
 
     }
@@ -33,11 +33,11 @@ public class Client {
         this.status = status;
     }
 
-    public float getValueOfMoney() {
-        return valueOfMoney;
+    public float getBalance() {
+        return balance;
     }
 
-    public void setValueOfMoney(float valueOfMoney) {
-        this.valueOfMoney = valueOfMoney;
+    public void setBalance(float balance) {
+        this.balance = balance;
     }
 }
